@@ -9,3 +9,5 @@ var ping = {
         ); 
      }
 }
+
+module.exports = ping;

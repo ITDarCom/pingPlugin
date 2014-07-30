@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+    <plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
+            id="com.example.myPlugin.ping" version="0.2.3">
+        <name>Ping</name>
+        <description>Cordova Ping Plugin</description>
+        <license>Apache 2.0</license>
+        <keywords>cordova,device</keywords>
+        <asset src="www/ping.js" target="js/plugins/ping.js" />
+        <js-module src="www/ping.js" name="ping">
+            <clobbers target="ping" />
+        </js-module>
+        <platform name="android">
+            <config-file target="config.xml" parent="/*">
+                <feature name="Ping">
+                    <param name="android-package" value="com.example.myPlugin.Ping"/>
+                </feature>
+            </config-file>
+            <source-file src="src/android/Ping.java" target-dir="src/com/example/myPlugin"/>
+        </platform>
+    </plugin>

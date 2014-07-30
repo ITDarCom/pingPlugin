@@ -1,5 +1,7 @@
 package com.example.myPlugin;
 
+import java.io.IOException;
+
 import org.apache.cordova.CallbackContext;
 import org.apache.cordova.CordovaInterface;
 import org.apache.cordova.CordovaPlugin;
@@ -8,42 +10,48 @@ import org.json.JSONArray;
 import org.json.JSONException;
 
 public class Ping extends CordovaPlugin{
-	@Override
-	public void initialize(CordovaInterface cordova, CordovaWebView webView) {
-	    super.initialize(cordova, webView);
-	    // your init code here
-	}
-	
-	 @Override
+    @Override
+    public void initialize(CordovaInterface cordova, CordovaWebView webView) {
+        super.initialize(cordova, webView);
+        // your init code here
+    }
+    
+     @Override
     public boolean execute(String action, JSONArray args, CallbackContext callbackContext) throws JSONException {
         if ("ping".equals(action)) {
-            this.echo(args,callbackContext);
+            this.ping(args,callbackContext);
             callbackContext.success();
             return true;
         }
         return false;  // Returning false results in a "MethodNotFound" error.
     }
-	 
-	 private void ping(JSONArray args, CallbackContext callbackContext) {
-        if (args != null && args.length() > 0) {
-            JSONArray resultList = new JSONArray();
-            for(Object object : args){
-                String ip = (String) object;
-                boolean result = executePing(ip);
-                if(result){
-                    resultList.put("success");
+     
+     private void ping(JSONArray args, CallbackContext callbackContext) {
+        try{
+            if (args != null && args.length() > 0) {
+                JSONArray resultList = new JSONArray();
+                int length = args.length();
+                for(int index=0; index<length; index++){
+                    String ip = args.getString(index);
+                    boolean result = executePing(ip);
+                    if(result){
+                        resultList.put("success");
+                    }
+                    else{
+                        resultList.put("timeout");
+                    }
                 }
-                else{
-                    resultList.put("timeout");
-                }
-            }
-            callbackContext.success(resultList);
-        } else {
-            callbackContext.error("Error occurred");
+                callbackContext.success(resultList);
+            } else {
+                callbackContext.error("Error occurred");
+            }            
+        }catch(Exception e){
+            System.out.println(e.getMessage());
         }
+
      }
 
-    private boolean executePing(ip){
+    private boolean executePing(String ip){
          
         System.out.println(" executeCammand");
         Runtime runtime = Runtime.getRuntime();

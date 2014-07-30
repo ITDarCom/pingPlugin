@@ -5,8 +5,7 @@
         <description>Cordova Ping Plugin</description>
         <license>Apache 2.0</license>
         <keywords>cordova,device</keywords>
-        <asset src="www/ping.js" target="js/plugins/ping.js" />
-        <js-module src="www/ping.js" name="ping">
+        <js-module src="www/ping.js" name="Ping">
             <clobbers target="ping" />
         </js-module>
         <platform name="android">

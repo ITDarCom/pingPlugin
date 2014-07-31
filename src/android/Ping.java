@@ -20,7 +20,6 @@ public class Ping extends CordovaPlugin{
     public boolean execute(String action, JSONArray args, CallbackContext callbackContext) throws JSONException {
         if ("ping".equals(action)) {
             this.ping(args,callbackContext);
-            callbackContext.success();
             return true;
         }
         return false;  // Returning false results in a "MethodNotFound" error.
@@ -34,11 +33,14 @@ public class Ping extends CordovaPlugin{
                 for(int index=0; index<length; index++){
                     String ip = args.getString(index);
                     boolean result = executePing(ip);
+                    
                     if(result){
                         resultList.put("success");
+                        System.out.println("success \n");
                     }
                     else{
                         resultList.put("timeout");
+                        System.out.println("timeout \n");
                     }
                 }
                 callbackContext.success(resultList);
@@ -53,7 +55,8 @@ public class Ping extends CordovaPlugin{
 
     private boolean executePing(String ip){
          
-        System.out.println(" executeCammand");
+        System.out.println("executePing \n");
+        System.out.println(ip + "\n");
         Runtime runtime = Runtime.getRuntime();
         try
         {
